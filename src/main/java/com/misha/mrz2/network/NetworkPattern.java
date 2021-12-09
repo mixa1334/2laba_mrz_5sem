@@ -1,50 +1,71 @@
-package com.misha.mrz2.network;
+package network;
 
-import com.misha.mrz2.service.Matrix;
+import service.Matrix;
 
 public class NetworkPattern {
-    private Matrix matrix;
     private Matrix vector;
     private String[] string;
+    private int rows;
+    private int columns;
+
+    public NetworkPattern(Matrix vector, int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
+        this.vector = vector;
+        convertToString();
+    }
 
     public NetworkPattern(String[] string) {
         this.string = string;
-        convertToBipolarMatrix();
+        rows = string.length;
+        columns = string[0].length();
+        convertToVector();
     }
 
-    private void convertToBipolarMatrix() {
-        double[][] matrix = new double[string.length][string[0].length()];
-        double[][] vector = new double[1][string.length * string[0].length()];
+    private void convertToVector() {
+        double[][] vector = new double[1][rows * columns];
         int i = 0;
-        for (int row = 0; row < string.length; row++) {
-            String line = string[row];
+        for (String line : string) {
             for (int column = 0; column < line.length(); column++) {
                 double value = line.charAt(column) == '#' ? 1 : -1;
-                matrix[row][column] = value;
-                vector[0][i] = value;
-                i++;
+                vector[0][i++] = value;
             }
         }
-        this.matrix = new Matrix(matrix);
         this.vector = new Matrix(vector);
     }
 
-    public void printPattern() {
-        for (int lines = 0; lines < string.length; lines++) {
-            String line = string[lines];
-            for (int column = 0; column < line.length(); column++) {
-                System.out.print(line.charAt(column));
+    private void convertToString() {
+        string = new String[rows];
+        int k = 0;
+        for (int i = 0; i < rows; i++) {
+            StringBuilder builder = new StringBuilder();
+            for (int j = 0; j < columns; j++) {
+                char value = vector.getValue(0, k++) == 1 ? '#' : '.';
+                builder.append(value);
             }
-            System.out.println("");
+            string[i] = builder.toString();
         }
-        System.out.println("\n");
     }
 
-    public Matrix getMatrix() {
-        return matrix;
+    public void printPattern() {
+        for (String line : string) {
+            System.out.println(line);
+        }
+    }
+
+    public String[] getString() {
+        return string;
     }
 
     public Matrix getVector() {
         return vector;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
     }
 }

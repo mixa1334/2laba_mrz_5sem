@@ -1,4 +1,4 @@
-package com.misha.mrz2.service;
+package service;
 
 import java.util.Optional;
 
@@ -6,16 +6,6 @@ public class Matrix {
     private final int rows;
     private final int columns;
     private final double[][] matrix;
-
-    public static Matrix randomMatrix(int rows, int columns) {
-        double[][] randomWeights = new double[rows][columns];
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                randomWeights[row][column] = Math.random() * 2 - 1;
-            }
-        }
-        return new Matrix(randomWeights);
-    }
 
     public Matrix(double[][] matrix) {
         rows = matrix.length;
@@ -38,30 +28,6 @@ public class Matrix {
         return new Matrix(newMatrix);
     }
 
-    public Optional<Matrix> subtract(Matrix secondMatrix) {
-        if (!checkMatrixSize(secondMatrix)) {
-            return Optional.empty();
-        }
-
-        double[][] newMatrix = new double[rows][columns];
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                newMatrix[row][column] = matrix[row][column] - secondMatrix.matrix[row][column];
-            }
-        }
-        return Optional.of(new Matrix(newMatrix));
-    }
-
-    public Matrix multiply(double num) {
-        double[][] newMatrix = new double[rows][columns];
-        for (int row = 0; row < rows; row++) {
-            for (int column = 0; column < columns; column++) {
-                newMatrix[row][column] = num * matrix[row][column];
-            }
-        }
-        return new Matrix(newMatrix);
-    }
-
     public Optional<Matrix> multiply(Matrix secondMatrix) {
         if (secondMatrix.rows != columns) {
             return Optional.empty();
@@ -78,7 +44,7 @@ public class Matrix {
         return Optional.of(new Matrix(resultMatrix));
     }
 
-    public Optional<Matrix> add(Matrix matrix) {
+    public Optional<Matrix> sum(Matrix matrix) {
         if (!checkMatrixSize(matrix)) {
             return Optional.empty();
         }

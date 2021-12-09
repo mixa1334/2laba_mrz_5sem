@@ -1,11 +1,10 @@
-package com.misha.mrz2;
 
-import com.misha.mrz2.network.Network;
-import com.misha.mrz2.network.NetworkPattern;
+import network.Network;
+import network.NetworkPattern;
 
 public class Main {
     public static void main(String arg[]) {
-        Network network = new Network();
+        Network network = new Network(8, 35, 18, 16);
         String[] string1 = {
                 ".#####....######....#####....#####.",
                 "...#......#....#....#........#.....",
@@ -202,12 +201,12 @@ public class Main {
         NetworkPattern pattern22 = new NetworkPattern(string22);
         NetworkPattern pattern3 = new NetworkPattern(string3);
         NetworkPattern pattern33 = new NetworkPattern(string33);
-        network.addPattern(pattern1);
-        network.addPattern(pattern11);
-        network.addPattern(pattern2);
-        network.addPattern(pattern22);
-        network.addPattern(pattern3);
-        network.addPattern(pattern33);
+        network.addPatternX(pattern1);
+        network.addPatternY(pattern11);
+        network.addPatternX(pattern2);
+        network.addPatternY(pattern22);
+        network.addPatternX(pattern3);
+        network.addPatternY(pattern33);
         network.learn();
 
         System.out.println("Введенный образ: ");

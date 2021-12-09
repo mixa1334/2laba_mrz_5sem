@@ -1,21 +1,25 @@
-package network;
+package com.misha.mrz2.network;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.Matrix;
 
-public class NetworkPattern {
+public class Pattern {
+    private static final Logger logger = LogManager.getLogger();
     private Matrix vector;
     private String[] string;
-    private int rows;
-    private int columns;
+    private final int rows;
+    private final int columns;
 
-    public NetworkPattern(Matrix vector, int rows, int columns) {
+    public Pattern(Matrix vector, int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
         this.vector = vector;
         convertToString();
     }
 
-    public NetworkPattern(String[] string) {
+    public Pattern(String[] string) {
         this.string = string;
         rows = string.length;
         columns = string[0].length();
@@ -48,9 +52,12 @@ public class NetworkPattern {
     }
 
     public void printPattern() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("pattern -> \n");
         for (String line : string) {
-            System.out.println(line);
+            builder.append(line).append("\n");
         }
+        logger.log(Level.INFO, builder);
     }
 
     public String[] getString() {

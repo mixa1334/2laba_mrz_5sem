@@ -1,236 +1,37 @@
+package com.misha.mrz2;
 
-import network.Network;
-import network.NetworkPattern;
+import com.misha.mrz2.network.BidirectionalAssociativeMemory;
+import com.misha.mrz2.network.Pattern;
+import com.misha.mrz2.service.PatternReader;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Optional;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger();
+
     public static void main(String arg[]) {
-        Network network = new Network(8, 35, 18, 16);
-        String[] string1 = {
-                ".#####....######....#####....#####.",
-                "...#......#....#....#........#.....",
-                "...#......#....#....#........#.....",
-                "...#......######....#####....#####.",
-                "...#......#.#.......#........#.....",
-                "...#......#..#......#........#.....",
-                "...#......#...#.....#........#.....",
-                "...#......#....#....#####....#####."
-        };
-        String[] string11 = {
-                "................",
-                "....#######.....",
-                "..############..",
-                ".##############.",
-                "################",
-                "################",
-                "################",
-                "################",
-                "################",
-                ".##############.",
-                "..############..",
-                ".....#######....",
-                ".......##.......",
-                ".......##.......",
-                ".......##.......",
-                ".......##.......",
-                ".......##.......",
-                ".....######....."
-        };
-
-        String[] string2 = {
-                "..##........##.....#.....#......#..",
-                "..#.#......#.#....#.#....##.....#..",
-                "..#..#....#..#...#...#...#.#....#..",
-                "..#...#..#...#...#...#...#..#...#..",
-                "..#....##....#..#.....#..#...#..#..",
-                "..#..........#..#######..#....#.#..",
-                "..#..........#..#.....#..#.....##..",
-                "..#..........#..#.....#..#......#.."
-        };
-        String[] string22 = {
-                "................",
-                "....#########...",
-                "....#.#...#.#...",
-                "....#.......#...",
-                "....#..###..#...",
-                "....#########...",
-                "........#.......",
-                "........#.......",
-                "..#############.",
-                "........#.......",
-                "........#.......",
-                "........#.......",
-                "........#.......",
-                ".......#.#......",
-                "......#...#.....",
-                ".....#.....#....",
-                "....#.......#...",
-                "...#.........#.."
-        };
-        String[] string3 = {
-                ".#....#..######..##.....##..######.",
-                ".#....#..#....#..#.#...#.#..#......",
-                ".#....#..#....#..#.#..#..#..#......",
-                ".######..#....#..#..##...#..######.",
-                ".#....#..#....#..#.......#..#......",
-                ".#....#..#....#..#.......#..#......",
-                ".#....#..#....#..#.......#..#......",
-                ".#....#..######..#.......#..######."
-        };
-        String[] string33 = {
-                "................",
-                ".......#........",
-                "......#.#..###..",
-                ".....#...#.#.#..",
-                "....#.....##.#..",
-                "...#.......#.#..",
-                "..#.........##..",
-                ".#############..",
-                ".#.#####.....#..",
-                ".#.#...#.....#..",
-                ".#.#...#.....#..",
-                ".#.#####.....#..",
-                ".#......######..",
-                ".#......#....#..",
-                ".#......#....#..",
-                ".#......#....#..",
-                ".#......#....#..",
-                ".#############.."
-        };
-
-        String[] test1 = {
-                "...###....######....#####....#####.",
-                ".#.#......#.##.#....#.#.#....#.....",
-                ".#.#......#.#..#....#...#....#.....",
-                "...#......######....#####....#####.",
-                "...#.#....#.#..#....#........#.#.#.",
-                "...#.#....####......#........#...#.",
-                "...#......#...#.....#........#...#.",
-                "...#......#....#....#####....#####."
-        };
-        String[] test2 = {
-                "..############.....#.....#......#..",
-                "..#.#......#.#....#.#....##.....#..",
-                "..#..#....#..#...#####..........#..",
-                "..#...#..#...#...#...#...#..#...#..",
-                "..#.............#.....#..#...#..#..",
-                "..#.............##..###..#....#....",
-                "..#..........#..#.....#..#.........",
-                "..#..........#..#.....#..#......#.."
-        };
-        String[] test3 = {
-                ".######..######..##.######..######.",
-                ".#....#..#....#..#.#####.#..#.##.#.",
-                ".#....#..#.##.#..#.####..#..#....#.",
-                ".######..#....#..#..##...#..######.",
-                ".#....#..#....#..#.......#..#......",
-                ".#....#..#....#..#.......#..#......",
-                ".#....#..#....#..#.......#..#......",
-                ".######..######..#.......#..######."
-        };
-        String[] test4 = {
-                "................",
-                "....#######.....",
-                "..##...#######..",
-                ".########...###.",
-                "###..##..####.##",
-                "#######..####..#",
-                "############..##",
-                "#....###########",
-                "..###...########",
-                ".##########...#.",
-                "....##########..",
-                ".....##..###....",
-                ".......##.......",
-                ".......##.......",
-                "................",
-                "................",
-                ".......##.......",
-                ".....######....."
-        };
-        String[] test5 = {
-                "......#..#......",
-                "....#########...",
-                ".#..#.......#...",
-                "..###.......#...",
-                "#####..###..#...",
-                "##..#.#####.#...",
-                "........#.......",
-                "........#.......",
-                "..#######.......",
-                "........#..#....",
-                "........#.#.#...",
-                "........####....",
-                "........########",
-                ".......#.####...",
-                "......#...#.....",
-                "......#....#....",
-                "......#.....#...",
-                "#######......#.."
-
-        };
-        String[] test6 = {
-                "................",
-                "................",
-                "......#.#.......",
-                ".....#...#......",
-                "....###..##.....",
-                "...#.#...#.#....",
-                "..#..#####..#...",
-                ".#####....####..",
-                ".#...........#..",
-                ".#...........#..",
-                ".#.##..#.....#..",
-                ".#.#####........",
-                ".............#..",
-                ".....##......#..",
-                "......#......#..",
-                ".#....#......#..",
-                ".#....#......#..",
-                ".#..####..####.."
-
-        };
-        NetworkPattern testP1 = new NetworkPattern(test1);
-        NetworkPattern testP2 = new NetworkPattern(test2);
-        NetworkPattern testP3 = new NetworkPattern(test3);
-        NetworkPattern testP4 = new NetworkPattern(test4);
-        NetworkPattern testP5 = new NetworkPattern(test5);
-        NetworkPattern testP6 = new NetworkPattern(test6);
-        NetworkPattern pattern1 = new NetworkPattern(string1);
-        NetworkPattern pattern11 = new NetworkPattern(string11);
-        NetworkPattern pattern2 = new NetworkPattern(string2);
-        NetworkPattern pattern22 = new NetworkPattern(string22);
-        NetworkPattern pattern3 = new NetworkPattern(string3);
-        NetworkPattern pattern33 = new NetworkPattern(string33);
-        network.addPatternX(pattern1);
-        network.addPatternY(pattern11);
-        network.addPatternX(pattern2);
-        network.addPatternY(pattern22);
-        network.addPatternX(pattern3);
-        network.addPatternY(pattern33);
-        network.learn();
-
-        System.out.println("Введенный образ: ");
-        testP1.printPattern();
-        network.searchPatternByX(testP1);
-
-        System.out.println("\n\nВведенный образ: ");
-        testP2.printPattern();
-        network.searchPatternByX(testP2);
-
-        System.out.println("\n\nВведенный образ: ");
-        testP3.printPattern();
-        network.searchPatternByX(testP3);
-
-        System.out.println("\n\nВведенный образ: ");
-        testP4.printPattern();
-        network.searchPatternByY(testP4);
-
-        System.out.println("\n\nВведенный образ: ");
-        testP5.printPattern();
-        network.searchPatternByY(testP5);
-
-        System.out.println("\n\nВведенный образ: ");
-        testP6.printPattern();
-        network.searchPatternByY(testP6);
+        BidirectionalAssociativeMemory network = new BidirectionalAssociativeMemory();
+        var patternsX = PatternReader.readPatternsFromDirectory("src/main/resources/patterns/x");
+        var patternsY = PatternReader.readPatternsFromDirectory("src/main/resources/patterns/y");
+        for (int i = 0; i < patternsX.size(); i++) {
+            network.learn((Pattern) patternsX.get(i).get(), (Pattern) patternsY.get(i).get());
+        }
+        var testPatternsX = PatternReader.readPatternsFromDirectory("src/main/resources/test_patterns/x");
+        var testPatternsY = PatternReader.readPatternsFromDirectory("src/main/resources/test_patterns/y");
+        for (Optional<Pattern> pattern : testPatternsX) {
+            logger.log(Level.INFO, "input -> ");
+            pattern.get().printPattern();
+            logger.log(Level.INFO, "output -> ");
+            network.searchPatternByX(pattern.get()).printPattern();
+        }
+        for (Optional<Pattern> pattern : testPatternsY) {
+            logger.log(Level.INFO, "input -> ");
+            pattern.get().printPattern();
+            logger.log(Level.INFO, "output -> ");
+            network.searchPatternByY(pattern.get()).printPattern();
+        }
     }
 }
